@@ -94,13 +94,13 @@ async def notify_user_after_cooldown(user_id: int, state: FSMContext,sleep_time)
     if user_id in cooldowns and datetime.now() >= cooldowns[user_id]:
         del cooldowns[user_id]  
         try:
-            await bot.send_message(user_id, "Вы снова можете отправить сообщение! Напишите /start.")
+            await bot.send_message(user_id, "Вы снова можете сделать прокрут",reply_markup=kb.io)
         except Exception as e:
             print(f"Ошибка отправки сообщения {user_id}: {e}")
-            await bot.send_message(user_id, "Вы снова можете сделать прокрут! Напишите /start.")
+            await bot.send_message(user_id, "Вы снова можете сделать прокрут!",reply_markup=kb.io)
 
     
-    await state.clear()
+    await state.set_state(Form.roll)
 
 
 
