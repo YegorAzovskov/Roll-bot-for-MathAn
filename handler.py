@@ -55,10 +55,11 @@ async def start_msg(message: Message, state: FSMContext):
     if await state.get_state():
         return
     await message.reply('Здрав-в-вствуйте! А можно нажать на кнопио?', reply_markup=kb.io)
-    await state.set_state(Form.roll)
 
-@router.message(Form.roll)
+
+@router.message(F.text == '🎰 Крутить барабан')
 async def roll_handler(message: Message, state: FSMContext):
+    await state.set_state(Form.roll)
 
     sleep_time = 60
     user_id = message.from_user.id
@@ -100,7 +101,7 @@ async def notify_user_after_cooldown(user_id: int, state: FSMContext,sleep_time)
             await bot.send_message(user_id, "Вы снова можете сделать прокрут!",reply_markup=kb.io)
 
     
-    await state.set_state(Form.roll)
+    await state.clear()
 
 
 
